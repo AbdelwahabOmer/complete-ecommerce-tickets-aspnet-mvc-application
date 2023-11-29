@@ -8,10 +8,10 @@ namespace eTickets.Data.Services
 {
     public interface ICinemasService
     {
-        Task<IEnumerable<Cinema>> GetAll();
-        Cinema GetById(int Id);
-        void Add(Cinema cinema);
-        Cinema Update(int Id, Cinema newCinema);
-        void Delete(int Id);
+        Task<IEnumerable<Cinema>> GetAllAsync();
+        Task<Cinema> GetByIdAsync(int Id);
+        Task AddAsync(Cinema cinema);
+        Task<Cinema> UpdateAsync(int Id, Cinema newCinema);
+        Task DeleteAsync(int Id);
     }
 }

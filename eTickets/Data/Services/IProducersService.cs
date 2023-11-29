@@ -8,10 +8,10 @@ namespace eTickets.Data.Services
 {
     public interface IProducersService
     {
-        Task<IEnumerable<Producer>> GetAll();
-        Producer GetById(int Id);
-        void Add(Producer producer);
-        Producer Update(int Id, Producer newProducer);
-        void Delete(int Id);
+        Task<IEnumerable<Producer>> GetAllAsync();
+        Task<Producer> GetByIdAsync(int Id);
+        Task AddAsync(Producer producer);
+        Task<Producer> UpdateAsync(int Id, Producer newProducer);
+        Task DeleteAsync(int Id);
     }
 }

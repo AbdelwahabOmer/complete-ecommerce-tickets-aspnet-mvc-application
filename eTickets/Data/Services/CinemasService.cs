@@ -15,31 +15,36 @@ namespace eTickets.Data.Services
             _context = context;
         }
 
-        public void Add(Cinema cinema)
+        public async Task AddAsync(Cinema cinema)
         {
-            _context.Cinemas.Add(cinema);
-            _context.SaveChanges();
+            await _context.Cinemas.AddAsync(cinema);
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(int Id)
+        public async Task DeleteAsync(int Id)
         {
-            throw new NotImplementedException();
+            var data = await _context.Cinemas.FirstOrDefaultAsync(n => n.Id == Id);
+            _context.Cinemas.Remove(data);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Cinema>> GetAll()
+        public async Task<IEnumerable<Cinema>> GetAllAsync()
         {
             var data = await _context.Cinemas.ToListAsync();
             return data;
         }
 
-        public Cinema GetById(int Id)
+        public async Task<Cinema> GetByIdAsync(int Id)
         {
-            throw new NotImplementedException();
+            var data = await _context.Cinemas.FirstOrDefaultAsync(n => n.Id == Id);
+            return data;
         }
 
-        public Cinema Update(int Id, Cinema newCinema)
+        public async Task<Cinema> UpdateAsync(int Id, Cinema newCinema)
         {
-            throw new NotImplementedException();
+            _context.Update(newCinema);
+            await _context.SaveChangesAsync();
+            return newCinema;
         }
     }
 }

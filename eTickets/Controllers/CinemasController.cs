@@ -21,7 +21,7 @@ namespace eTickets.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var data = await _service.GetAll();
+            var data = await _service.GetAllAsync();
             return View(data);
         }
 
@@ -39,7 +39,74 @@ namespace eTickets.Controllers
                 return View(cinema);
             }
 
-            _service.Add(cinema);
+            await _service.AddAsync(cinema);
+            return RedirectToAction(nameof(Index));
+        }
+
+        //Get: Cinemas/Details/1
+        public async Task<IActionResult> Details(int Id)
+        {
+            var data = await _service.GetByIdAsync(Id);
+
+            if (data == null)
+            {
+                return View("NotFound");
+            }
+
+            return View(data);
+        }
+
+
+        //Get: Cinemas/Edit/1
+        public async Task<IActionResult> Edit(int Id)
+        {
+            var data = await _service.GetByIdAsync(Id);
+
+            if (data == null)
+            {
+                return View("NotFound");
+            }
+
+            return View(data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int Id, Cinema cinema)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(cinema);
+            }
+
+            await _service.UpdateAsync(Id, cinema);
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        //Get: Cinemas/Delete/1
+        public async Task<IActionResult> Delete(int Id)
+        {
+            var data = await _service.GetByIdAsync(Id);
+
+            if (data == null)
+            {
+                return View("NotFound");
+            }
+
+            return View(data);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int Id)
+        {
+            var data = await _service.GetByIdAsync(Id);
+
+            if (data == null)
+            {
+                return View("NotFound");
+            }
+
+            await _service.DeleteAsync(Id);
             return RedirectToAction(nameof(Index));
         }
     }
